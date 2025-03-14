@@ -2,99 +2,136 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>Bouncing Box</title>
-	<script src="jquery.min.js"></script>
-	<style>
-		.box {
-			width: 70px;
-			height: 70px;
-			background-color: teal;
-			font-size: 300%;
-			text-align: center;
-			user-select: none;
-			display: block;
-			position: absolute;
-			top: 100px;
-			/* Change me! */
-			left: 0px;
-		}
+  <meta charset="utf-8">
+  <title>Bouncing Box Game</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqAuJLGuO_-7aG1dkLUyUx7f62N7xWO2UUoA&s');
+      background-size: cover;
+      background-position: center;
+      font-size: 300%;
+      text-align: center;
+      user-select: none;
+      display: block;
+      position: absolute;
+      top: 100px;
+      left: 0px;
+    }
 
-		.board {
-			height: 100vh;
-		}
-	</style>
-	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    .board {
+      height: 100vh;
+      position: relative;
+      background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEhAQEBAVEBUQEA8PFQ8VDxAPEA8PFRUWFhUVFRUYHSggGBolHRYVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0lHyUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAMIBAwMBEQACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAAAQIDBAUGBwj/xAA+EAACAQMCBAQEBAIGCwAAAAAAAQIDBBEFIRIxQVEGImGBE3GRoTKxwdFCUgcUI0OCohUzYnJzkrLC4fDx/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAECAwQFBv/EADMRAAICAQQAAwYGAgEFAAAAAAABAgMRBBIhMRNBUQUiMmGB8HGRobHB0ULhFBUjJGKS/9oADAMBAAIRAxEAPwD4cQWAIAJJwCcMYAwyAQAAASSQAAARgEDAJJAABBAAAAJAABAABIAAABBJIIaBBAAAAAAAAAJILAAuokZNFEtggtgYAwVaJKtBIEJFWiSrRAIAABAAAAAAABIJIJAAAIABOBgDDIwBgAAEEkghgEAgAAAAAAAEkFi0Qy0TIipqicEF8DAGCGiSrQSASMcyUYz7KklQCACQAAAAAQASSkxklRbLKmyNxdVNllSI3F1SW+ERuLeCOAZGzBDQIaKNlsGbkUJMwCAAGSQQAAAAAAAACSCxeCIZeCMiRU2SLJEF0icAtgq0SUaAGCsokpmcolXEnJVxIwMkbRwjJG0cIyTtABXBJngvCk2VcsGsKXI2YWrM3YdcNMW+Fgjdkv4aRXYkjgZ9ARwQSCVB/wDuxGSdjYdNd0NxDrXqY5U13LKTMpVxfmUdJdydxm6V5Mq6bLKSM5VSRRljJrBDBBAAAAAAAAAJIJL0yGawMqKm6LoqaIkEkNAhojAIwQ0SiGirRJm0VJKBIEpFmiCzRXhJyV25Nq2tM78kZTswdlGk3cm/Cgkc7m2ejGmMUUqFkUn8jGqTZbckZeHJj+qjxCf+My8bVdSrsLrTLzLOjjkhuz2S6tvwmrUoyNFJHLOqRrygaJnNKDMUoF0zCUGY3ksYvKJU2RhEqySLcafMYwX3qXZVolMzlHHRQkoAAAAAAACSCS9MhmlfZmiUZ0xLIg0RIAIJBJBDAZRljJlUiSiReMSrZrGJLQyHE27KzcmtjGy3adum027lnXlbqK3ORT3M9TYkjXaNDNrIVH0I3BQMkaLZDkiyiy6oJfikvkV3t9IttS7MFecV1NIpsysnGJo1LzsbKv1OKeq9DC7ll9iMHqGUlUyWSwZueSrRJVrJinAsmYTgYmi5g1ggEAAEkEAgAAAAAAyTiVTNZxxyREllYPkzxM2dkS5BcvSRWRpBZZl+GUya7CrpE7ivhmOpHBZPJnOODFJF0YSREUGIozRp7ZKNm6hlZM1nQcn6fmVsntRrp6d8s+R6qxslThxyPKst3y2o9qEFFGhPiqSxFc2brEI5Zm8yeEdH/RqppJrik1y/c5/Hc38jVQSNe5o8H4t3j8PY0hLd10RLg16VGc3l7L6I0lKMSiTfZvUtFnNeVN+xzy1UYvkv4eTmX2h1VzTWDqq1cPI5btK5+Zya1lKJ1xtTOCzSziac6bRsmccq2jGyxg8oKoNoVpdTK4NVNMiUSUyJQyYXEvk5nHBAIJJIIYIIAAAAABsMzOt8mKSwXOeSwzNTZmzqreTIQamSiUka19m5GJk2dkY5Rb4ZXcX8MwXFI0hI57azTaNjjaJjENiMTfhS2Ody5PRjX7p29D0/PDtz39jh1N2MnbRUorB09Wy8U48uRzafC95m8vQ6mi6R8Kj/AFmS81WTp0ovrj8U/kjPU2OWF5FINbtq8uzJqFONtD4lTepP8K6v1+RhVuultXSNW0jladoN1dSc405Nc3s8RXr0Xuz0N6itsOTCc4x5m8Ge+0tUfLO6taMlz+Jcccl/gpKWPdiEXLlp/Qzeoiuv6/fBo2984tqlqttL0ca8F7N0yZ6eL+Kp/f1Kw1SfUl+a/spd2t5PMoSjXXPNCrGt/kT4vsTDwYcNY/FYNHOT5OBWnLfi5rK32aZ2RS8jKcn5mjWXv6G8TgsTNWcTVM5JRTNeccGiZxzg0yiZJTODNTbKs6K22XcUVyauCMVRF0c1ix0ULGRUEAAAAAAGwjM60Q0CHHJMAy0ODKVNzLEozWJuUGYyO2pmwotmeTowVq0iYyKzhlHPrUjojI86yvBNtSInImmvLOraW/E8HLZPbyelXA9XpVHGcdEkjyb5ZOyKwZbW2+JVwlltqK+fIiUmoJIjhcs+iXNhCVxGmv8AVWdFQx0xFZk/m3llLsTucP8AGK/bv83k86uyUKN/+U3+/X5I4OsW1tQcr/U+2aNlF4k4b8PG/wCGP3f2OzT1YSjJcv8Ax/v0X6id7xtqfC7m+vp6s+ZeKfH15e/2cH/VreOVGhS/s4JeuOZ69emjFe/z8vJfgv5PIlfKTfhf/T7f18vwR5eNu3u0364Zu5pER07fLyyzt+8X9Cu/5l3p0u4l6DlFqUJOLXJpuLREsSWJItBOHwPB6TT9bjWxTv4fE6K5WI1ofOX8S9Hk4bNO4e9S/p5HoUXuXuzX1K654elTxKDU4TWYVF+GSIo1alxJYfoaXaXcvdPOTpNbNHoKSZ5c65J4aMbiWyZ7c8MxumluTnJk64x5KuZZIylZ6CMw0I2epMiC8uUYyxgyGSVIAAAAABlhIo0bwkXINSyIZaKLkGhmpGcjeHKM9J4KSN63hnStNzmnwehA3na5Rh4mGaYycq4oYbTOqM8nNOsihR6ImUiK68dHb0G2zPBxaqeInVXE9Pp1t5pI8u2fCZsuDZ0SmoV6ba/vU/dPJMp9P0wUsWYSXyZ7i41GFnY1L2quKdSWacH/ABzbxBfJPf2O/R1KNPiv4pPj6f12eNcndqFTH4Yrn7/Q+AeL9arXdeSnNz4W+Jt/in19ly9j1NLUq475dsx1UvFn4NfEY/v/AKOJKtGO0d33x+S6HSouXZhK6FXEeX9/l+5glcSfX82XUEjmlqZsRuGg4IR1MkZ4VU+f1/czcWujqjbGfxfmbVHMX3TM5YaOuvMJeqPb+GrmKh8Go+OjU6P+7l3XY8bVRbluXEketBcZRxPE+nOlOSS26Pujr0dynHk59VB4yjzFTKPTR4s8oxqedmWxgyVilwzHOGCyeTCyG1lCxmWUiGi8ZYIYKsgkggEAAAAAsmQyyeDNFlGdMXlFkQaIsQXMlJ7lZI0rfJtwMWdceTct54aZjNZOyDwek0/EkjzrsxOqPQ1LTMriSFOo5wyJQyamnWW+DW63giMTs6Va8NTkcV9m6BpFYZ6G2o4qL/bi/tucLeY4Jk+DcstOcq9NJZ4Lmlxf7k3g1oi5TUfXC/UwvtSqbz5N/oP6aZ8FOhGG8LeM5cPTijh7/RfU92exXxpj0lg8nRSapsul33+58DnNqPPeW7fU9RLLPOlPw60vNmszU4yAAAWhLBDWS0JbWb9pWxs+XQ57I55PU09u17X0eg0qt/K+b5dH/wCTgvh6ntUzTXunoNZg50KdWS705fOPX6OL/wATOKh7bGkavng8TfUOp7FUzy9TSuzkVI4Z1p5PEsjtZMZ9GMehKnniRSawSnkylHa8EIkqCCwBAZJBAAAABKAL02VaNq5eRmRQ6UWRBctDmQy0ezcpMxkdlbNul0MZHZE7Wm1eF+hx3R3I6Y8HstNjGpHHPJ41uYyNs8GGrpDpVOW0uRq7t0cPsrFqXKOnS0/OJJcuZzbm1gOSR2oaY5QU4LMqbU0v5l1RpCqTi2jklqEp7ZdPg7Oh2XBdcWPLKlF8s7xw4/8AcvnE9HQ17b1nrv8ATJ52su3UY88/f38z5n48vvjyuodKqqTgs53lHD+8F9RQ07vF/wDb+T0PB/8AG8Pz24Pj9d7+yPpY9HzF794xFjEAAAAGzB7RZk/M7YPEYs27a6dOWVus7x7rp7mU61OOGddV7qm2uvM+l+HpRurO4hnOFCpHPNS3i/fdfRHg3qVM8+jPZjOM9so9PKPE39JptM9SqWeTK6PDRwLmPM74M8HURwaxocRfOV8iOmaZ3RwVRYzABBBIZJUgAAAAAEoglMz05FGjqrlkyFTckgk26LMpHZUzbgYs7I9HTsqnI5rEdEWej0i7cGjzr69yNkfUNBhQvKfBN4kls9s57onSUV6j/tzeH5Hj6udulnvj0zfhoEqe2OJLquvz9TV+zJ19rJhL2grOejEpOi1JLbO67GCbokpIvjxltfZ6W0jCSjUhjEllNdMpbfZfQ+hphXKKnDzX7o8ixzi3CXkfnPXKc4udGS4Z0JzUVuswT3h81t9F3yeTVHD5+v4n1u5SipRPn+pRXE3jHdfqj3KX7p83r4rxMr7+ZpmxwAAAEpAlLLwbbhhRRjnOT0HDCiiZPzTXdfcL4Uw2vElE9T/R1fypzuIt+WdBr0UuKOH+h53tSpSgmu8nd7Mm3wzFqlRSl9StEcI9G15OBeQPQrZ4+pjyc9nQeU1hkJghPBLYQk88lSSpOQCAAAAAAACUAWjLBVo0jLBniyjR1xlkuQXM9CRnJG9TN6nIwaPQg8o37SSMJo6Ivg7FtL3Xc45o2R6LSdQnSlGUZYxjdHDOPOY8MmUVOO2XR9M0HxfTqRSrPhf8/R/M9TS+1se7f+Z4Gr9lSi91XK9Dq39pTrxbpSi210a3OjUUV6mO6prJx02zoliaOXY1qtvGHEmowrwp1IvpTnmMZfJNxOTRyso4lwk0mvx+0dl8YXyeO2sr8V3+mTyf9JWjUqteW/BUwpKXJvt81z+/qnlq7ZUamWFlP+Tu9m5nQsnxnxDpFSDfHHD/AJlvGR6ek1MZr3WZ67S7lnzPOThg9JPJ4E63EoSZk4BODetLN85bfovUwst8kejptI/ikZI+aeVyX5Iq/dibRW+3PkjUlLM2+7Zql7pxSlm7J3NHjwUK1TlxyUI+3P8A6vscWoe6yMfQ9XQrZXKZEq2cS7pEKOODq8TclI07xG1Zxajnk51WJ0xZ5VsUmYixgCQQCAAAAAAAAACUACCTJTkVaNq5GaLKNHTGWTJCWCGjSLwzcozMJI7qpm5SqY3MpLJ1xl5nb0+unjJw2wOiLPQW0O30PPm/U1RmzKD4o5XeJTiXDJPQ6P4icMZ/MiE50vKOW/SxtR7G28QW9eDpV2uGouB522fd/qetV7Srtj4d/T8zxrPZ91Mt9XaNfxh4WjeRhGnXVOrQglxTzJypvk5NfJ7nVfp4TllS5S5z5ryf+ymj1kqM7o8Sfl5P78j5ZrXgrUI5Xxresu8blZftNLByqzT1c7l9MHrLUOzhRf1R5G58I3efNGn7TT/JHRH2jR5NnNPR3TfSNZ+E6y3m4x9v1lgv/wBRrfXJRey5PtpfQq9Mp0t5PL7837L/AOFvHlZ0bx0lVXPn8zRu7pPyxWF+fubQhjlnNfepLbEwSnwQz1m8exolul+Bzyn4VWfNmK0pOpKMYrzSeEWslsi2+jCiPiySiuTu69JU407aD2przes3u/z+5xaZObdj8z1tU1XBVxOfaTzmPujexY5MtPPdmJFyIC/Bza/M6YnkX/EYi5gQCAAAAAAAAAAAACSCSUwSngyRkVaN4yMqkVaN1Iy06mCjWTaE8G5RrmMoHZXcjoWtzg55wydkJo9Dp2rJY3PPu02TpjM9Fa3lOa3wedOqUTTOSbi0j+Km36x/YRsfUgaUdTS2cuXRo1dDfOCMnsPDXi6lP4VC4mqcoeWjc81FPb4dTvB7LfsuTSZ6NFzSULPLp+nyfqjydXo3mVlaznuP8r5/fyMfizSatHiq0OJLeUqKaqKK58VNv8UPuuqOfUaSMZcLC++vkaaPWb1tk+fX+/R/ufP7vxVJZTcm108sMfMtXoE+TtlaonA1DxBOXVR+W7+rO+rRxictmrSOFWrSnlvl3/dndGKiebZbKz8CKdJYcpPEV17kuT6XZEK1hyk+EYpRlVklFeiXp+nzLrEFyctm6+fC48kei0+2jawlVlhzawu2ey9Fs332XXbgssd8tq6PW09EdNDdLs4Veq5ycm8ttvL9erOyMVFYOKybslkUanDJfQSWUTXNQki1eWckRWC1sss0K3M6I9Hl3fGY2WMiAQAAAAAAAAAAAASgSCCSUwSngyRkVaNoyLxkVaNYyMkZENGkZehtUa5jKB11XG7Sq9mYuJ3Qnk3rfUZx5MwnRGRsrGdmz8RNfiRxWaJPo1jYb0q9G47RfdbGKhZSWyma9zp04b813NIXxkNp09H8Z17eKo1UrijHGKc5NSp/8Oa80PuvRHSm2sPlffT8vocdulhKW5cS9V5/iumW1d6Rd+aUp0JvrwKbfo5Q2f8Ay+7EHOPw/k/74/VFdli4eGvl/v8Av6Hj77QreL/s7iG/L4nHn7R4V9TprvnL4kUdMFylz9+TNKnoilLzXFNpNryuUm0u0YpvHsbO/C4iZLTbn7zb+gutPjlRXE4r0dPPy4lxf5fcrC3HLfP399l7KnZiKWEvU2LanTox4pcufCuc2vV/m9l03MpynY8I3rrrpWTj6leyqzbey5YXJLsjrpqVccI87UXuyXyNOUjVI53JIxOpuX2nO7ecGZModKfBq1XuzaPRwW/GzGSZAAAAAAAAAAAAAAAEgkEEkpglPBeMiMGikXUiuDRSLxkVaNYyNilWwUlE6a7cdm5SrJmEo4O2FqZsU5epRo3TNqhWcXlbGUopmieDtW2uyxie67nFPSRzmJspmneRt6rypOD9N19GbV+LX5ZRSSjI1qOkzz5Kif7e5pLURxyjONLT4ZvUXcw2Uo/PhizCXhS7RriSMGpazXx8P47S/iw1HPp5TWnT1/FtMrJ48zhzvYx5eZv+J7r6fudqqk+zknqYR65NG4upSy2+ZvCtR6OK3UOXbNV1DXacbtRilPJZIwnPJVEsrHs2osyZ3RfBq1ObNV0cNnxMqSUAAAAAAAAAAAAAAAABYEkEEgAvFkMvGRdMqapmRMg2TLxk1yKtGkW10btCbMZJHbVKTOnZrOz5HLZx0d8DtW1lB/scU7ZI2SOXq9m6ctuT+x1ae3ejKyOOTTpVpLk2vc2lGL7KKTF9qsksKW76irTpvLRjqNVsWF2cGrct89zvjDB4tmpbfJjdUttMXczG5FsGTk2QCAySCY9CGWh2bEWZs64vg158zRHHLsqSVAAAAAAAAAAAAAAAABZAkggkAgAkyRZDNYyMsWUZvFmSLKs1Twzbo1DKUTsrsRuUqnVGMonZGfob1tqMonPOhSNlYb91q1KcPMt0jCGnnCXHRd2RaPM3VzzxsenCv1PNuv8AKJoVdzoiefZyjWmjRHHNFCTIkkEAEAgvAhmkOy0pEJF5TwY2WMWQCAAAAAAAAAAAAAAAAASgAQSASACUwE8GSMyrRtCZlTKYOlSLKWOowTux5mSNy0UdZqtQ0Hcy7jYh/wAiT8yyuGNhKvZinPPMslgylPPZgqVOxdROay1dIwtl8HO5NgkqASQCAAXiVZpAhklW+SCSCAQAAAAAAAAAAAAAAAAAATkEggAEgAAE8TGCdzHExgbmWUyMFlMsqhGC6tHGMDxMlZSJSKSm2ULGQwACCQySCACUASmQXTIZJQAEAAAAAAAAAAAAAAAAAAAAAnIAyAEwACRkDIyAMggAklMgsnggEEgYGATggkqQCAASCQAQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACUACCQCSyYLJ4RVsFW8kElQASgAQWDJIIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAkggkABklSAAASgCQSVBAAAAAAAAAAAAAAAB/9k=');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
 
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
 </head>
 
 <body class="board">
-	<!-- HTML for the box -->
-	<div class="box">?</div>
+  <div class="box">?</div>
 
-	<script>
-		(function () {
-			'use strict'
-			/* global jQuery */
+  <script>
+    (function () {
+      'use strict'
 
-			//////////////////////////////////////////////////////////////////
-			/////////////////// SETUP DO NOT DELETE //////////////////////////
-			//////////////////////////////////////////////////////////////////
+      var box = jQuery('.box');
+      var board = jQuery('.board');
+      var boardWidth = board.width();
+      var boardHeight = jQuery(window).height();
+      var positionX = 0;
+      var positionY = 100;
+      var speed = 20;
+      var speedY = 5;
+      var points = 0;
+      var misClicks = 0;
 
-			var box = jQuery('.box');	// reference to the HTML .box element
-			var board = jQuery('.board');	// reference to the HTML .board element
-			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
+      var interval = setInterval(update, 50);
 
-			// Every 50 milliseconds, call the update Function (see below)
-			setInterval(update, 50);
+      function moveBoxTo(newPositionX, newPositionY) {
+        box.css("left", newPositionX);
+        box.css("top", newPositionY);
+      }
 
-			// Every time the box is clicked, call the handleBoxClick Function (see below)
-			box.on('click', handleBoxClick);
+      function changeBoxText(newText) {
+        box.text(newText);
+      }
 
-			// moves the Box to a new position on the screen along the X-Axis
-			function moveBoxTo(newPositionX) {
-				box.css("left", newPositionX);
-			}
+      function getRandomColor() {
+        var r = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+        return "rgb(" + r + ", " + g + ", " + b + ")";
+      }
 
-			// changes the text displayed on the Box
-			function changeBoxText(newText) {
-				box.text(newText);
-			}
+      function update() {
+        positionX += speed;
+        positionY += speedY;
 
-			//////////////////////////////////////////////////////////////////
-			/////////////////// YOUR CODE BELOW HERE /////////////////////////
-			//////////////////////////////////////////////////////////////////
+        moveBoxTo(positionX, positionY);
 
-			// TODO 2 - Variable declarations 
+        // Horizontal boundary checks
+        if (positionX >= boardWidth - 70 || positionX <= 0) {
+          speed *= -1; // Reverse horizontal speed
+          points++; // Increase points when bouncing off walls
+          changeBoxText(points);
+        }
 
+        // Vertical boundary checks
+        if (positionY >= boardHeight - 70 || positionY <= 0) {
+          speedY *= -1; // Reverse vertical speed
+        }
+      }
 
+      function handleBoxClick() {
+        // If clicked outside the box, count it as a mis-click
+        if (event.target !== box[0]) {
+          misClicks++;
+          if (misClicks >= 10) {
+            endGame();
+            alert("Game Over! Too many mis-clicks.");
+          }
+        }
 
-			/* 
-			This Function will be called 20 times/second. Each time it is called,
-			it should move the Box to a new location. If the box drifts off the screen
-			turn it around! 
-			*/
-			function update() {
+        // Randomize box position on each click
+        positionX = Math.random() * (boardWidth - 70);
+        positionY = Math.random() * (boardHeight - 70);
 
+        points++;
 
-			};
+        // Increase speed more drastically every 3 clicks
+        if (points % 3 === 0) {
+          speed += 5; // Increase the speed significantly
+        }
 
-			/* 
-			This Function will be called each time the box is clicked. Each time it is called,
-			it should increase the points total, increase the speed, and move the box to
-			the left side of the screen.
-			*/
-			function handleBoxClick() {
+        // Set new speed using the formula
+        speed = 3 * points + 10;
 
+        // Change color on each click
+        var newColor = getRandomColor();
+        box.css("background-color", newColor);
 
-			};
+        changeBoxText(points);
+      }
 
+      // End the game by clearing the interval
+      function endGame() {
+        clearInterval(interval); // Stop the game
+      }
 
-
-
-
-		})();
-	</script>
+      // Listen for box clicks
+      box.on('click', handleBoxClick);
+    })();
+  </script>
 </body>
 
 </html>
